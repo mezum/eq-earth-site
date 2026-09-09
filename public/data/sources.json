@@ -1,0 +1,184 @@
+{
+  "sources": [
+    {
+      "id": "esri-equal-area",
+      "title": "Equal-Area Projection — GIS Dictionary",
+      "publisher": "Esri",
+      "url": "https://support.esri.com/en-us/gis-dictionary/equal-area-projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-equal-area",
+      "title": "Equal-area projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Equal-area_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-theorema-egregium",
+      "title": "Theorema Egregium（ガウスの驚異の定理）",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Theorema_Egregium",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-mercator",
+      "title": "Mercator projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Mercator_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-lambert-cyl",
+      "title": "Lambert cylindrical equal-area projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-mollweide",
+      "title": "Mollweide projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Mollweide_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-gall-peters",
+      "title": "Gall–Peters projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-eckert4",
+      "title": "Eckert IV projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Eckert_IV_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-goode",
+      "title": "Goode homolosine projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Goode_homolosine_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-equal-earth",
+      "title": "Equal Earth projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Equal_Earth_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "ijgis-equal-earth",
+      "title": "Šavrič, B., Patterson, T., Jenny, B.「The Equal Earth map projection」International Journal of Geographical Information Science, 33(3), 454–465（オンライン公開 2018年8月7日）",
+      "publisher": "Taylor & Francis",
+      "url": "https://doi.org/10.1080/13658816.2018.1504949",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "frwp-correct-the-map",
+      "title": "Correct the Map",
+      "publisher": "Wikipédia（フランス語版）",
+      "url": "https://fr.wikipedia.org/wiki/Correct_the_Map",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "correctthemap",
+      "title": "Correct The Map（キャンペーン公式サイト）",
+      "publisher": "Africa No Filter / Speak Up Africa",
+      "url": "https://correctthemap.org/",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "npr-au-2025",
+      "title": "African Union backs campaign to replace Mercator map that distorts Africa's size（2025年8月21日）",
+      "publisher": "NPR",
+      "url": "https://www.npr.org/2025/08/21/nx-s1-5508358/mercator-map-africa",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "un-news-2026",
+      "title": "UN tells the world: Stop making Africa look small（2026年9月4日）",
+      "publisher": "UN News",
+      "url": "https://news.un.org/en/story/2026/09/1168284",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "cnn-un-2026",
+      "title": "UN votes to adopt new map that makes our world look very different（2026年9月4日）",
+      "publisher": "CNN",
+      "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "foxnews-2026",
+      "title": "United Nations votes 164-1 for Equal Earth map after US brands it 'radical ideological project'（2026年9月）",
+      "publisher": "Fox News",
+      "url": "https://www.foxnews.com/world/united-nations-votes-164-1-equal-earth-map-us-brands-radical-ideological-project",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "france24-2026",
+      "title": "France to abandon 'distorted' Mercator map projection: minister（2026年9月4日）",
+      "publisher": "France 24 / AFP",
+      "url": "https://www.france24.com/en/live-news/20260904-france-to-abandon-distorted-mercator-map-projection-minister",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "connexion-2026",
+      "title": "France adopts Eckert IV world map to replace Mercator projection（2026年9月）",
+      "publisher": "The Connexion",
+      "url": "https://www.connexionfrance.com/news/france-adopts-new-world-map-moving-on-from-mercator/813158",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "mainichi-2026",
+      "title": "メルカトル図法でない「正しい世界地図を使って」 国連総会決議（2026年9月）",
+      "publisher": "毎日新聞（Yahoo!ニュース配信）",
+      "url": "https://news.yahoo.co.jp/articles/3807e5d343f17dad0710cbd4efb65ff92d2e0922",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "naturalearth",
+      "title": "Natural Earth 1:110m Cultural Vectors（パブリックドメイン）",
+      "publisher": "Natural Earth",
+      "url": "https://www.naturalearthdata.com/",
+      "accessed": "2026-09-09",
+      "note": "本サイトの地図の国境・海岸線データ。Natural Earth は「使用に許諾を要しない」パブリックドメインのデータセット。"
+    },
+    {
+      "id": "world-atlas",
+      "title": "world-atlas countries-110m.json（ISC License）",
+      "publisher": "Mike Bostock",
+      "url": "https://github.com/topojson/world-atlas",
+      "accessed": "2026-09-09",
+      "note": "Natural Earth を TopoJSON に変換した配布物。同梱している。"
+    },
+    {
+      "id": "d3-geo",
+      "title": "d3-geo v3.1.1 / d3-array v3.2.4（ISC License）",
+      "publisher": "Mike Bostock ほか",
+      "url": "https://github.com/d3/d3-geo",
+      "accessed": "2026-09-09",
+      "note": "Equal Earth 図法の投影計算と描画に使用。同梱している。"
+    },
+    {
+      "id": "topojson-client",
+      "title": "topojson-client v3.1.0（ISC License）",
+      "publisher": "Mike Bostock",
+      "url": "https://github.com/topojson/topojson-client",
+      "accessed": "2026-09-09",
+      "note": "TopoJSON から GeoJSON への変換に使用。同梱している。"
+    },
+    {
+      "id": "muji-design-md",
+      "title": "無印良品ネットストア デザインシステム概要（awesome-design-md-jp）",
+      "publisher": "kzhrknt",
+      "url": "https://kzhrknt.github.io/awesome-design-md-jp/design-md/muji/DESIGN.md",
+      "accessed": "2026-09-09",
+      "note": "本サイトの配色・タイポグラフィ・余白の設計指針として参照。"
+    }
+  ]
+}
