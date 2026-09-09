@@ -322,8 +322,28 @@ a:hover {
   margin-top: var(--s-1);
 }
 
-.timeline__body {
+.timeline__detail {
   margin-top: var(--s-2);
+}
+
+/* 図法の項は、外形の図を詳細文の左側に置く */
+.timeline__detail--figured {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+.timeline__figure {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--c-border-light);
+  background: var(--c-bg);
+}
+
+.timeline__body {
+  margin: 0;
   color: var(--c-text-secondary);
 }
 
@@ -433,6 +453,15 @@ a:hover {
   .sources__item {
     grid-template-columns: 28px 1fr;
     gap: var(--s-3);
+  }
+
+  .timeline__detail--figured {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+
+  .timeline__figure {
+    max-width: 240px;
   }
 }
 
