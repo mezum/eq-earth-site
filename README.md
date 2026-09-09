@@ -23,6 +23,7 @@ npm run build:thumbs # 年表に添える図法の外形図（SVG）を再生成
 そのまま GitHub Pages の成果物としてアップロードし、公開します。
 
 - 公開 URL: <https://mezum.github.io/eq-earth-site/>
+  （アカウントに独自ドメインが設定されているため <http://mezum.one/eq-earth-site/> に転送されます）
 - 手動で流すときは Actions タブの **Deploy to GitHub Pages** から
   **Run workflow**（`workflow_dispatch`）
 - リポジトリ設定の **Settings → Pages → Source** は **GitHub Actions**
