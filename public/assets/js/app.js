@@ -258,3 +258,104 @@
       canvas.parentNode.insertBefore(msg, canvas.nextSibling);
     });
 })();
+
+/* ============================================================
+   2. 出典（注釈番号の自動採番と一覧の描画）
+   ------------------------------------------------------------
+   本文中の <a class="fn" data-src="ID"> に、sources.json の
+   配列順にもとづく番号 [n] を入れ、末尾の一覧へのリンクにする。
+   出典を足すときは sources.json に 1 件追加するだけでよい。
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var App = window.App || (window.App = {});
+  var listEl = document.getElementById("sourcesList");
+  var index = Object.create(null); // id -> { number, source }
+
+  /** 指定範囲の未処理の注釈に番号を入れる */
+  function numberFootnotes(root) {
+    var nodes = (root || document).querySelectorAll("a.fn[data-src]");
+    Array.prototype.forEach.call(nodes, function (el) {
+      if (el.dataset.numbered === "1") return;
+      var entry = index[el.getAttribute("data-src")];
+      if (!entry) {
+        console.warn("未知の出典 id:", el.getAttribute("data-src"));
+        return;
+      }
+      el.textContent = "[" + entry.number + "]";
+      el.setAttribute("href", "#src-" + entry.source.id);
+      el.setAttribute("title", entry.source.title);
+      el.setAttribute("aria-label", "出典 " + entry.number + "：" + entry.source.title);
+      el.dataset.numbered = "1";
+    });
+  }
+
+  function renderSources(sources) {
+    if (!listEl) return;
+    var frag = document.createDocumentFragment();
+
+    sources.forEach(function (src, i) {
+      var li = document.createElement("li");
+      li.className = "sources__item";
+      li.id = "src-" + src.id;
+
+      var num = document.createElement("span");
+      num.className = "sources__num";
+      num.textContent = "[" + (i + 1) + "]";
+      li.appendChild(num);
+
+      var body = document.createElement("div");
+
+      var a = document.createElement("a");
+      a.className = "sources__title";
+      a.href = src.url;
+      a.textContent = src.title;
+      a.rel = "noopener noreferrer";
+      a.target = "_blank";
+      body.appendChild(a);
+
+      var meta = document.createElement("div");
+      meta.className = "sources__meta";
+      meta.textContent =
+        src.publisher + "　" + src.url + (src.accessed ? "　（" + src.accessed + " 閲覧）" : "");
+      body.appendChild(meta);
+
+      if (src.note) {
+        var note = document.createElement("div");
+        note.className = "sources__note";
+        note.textContent = src.note;
+        body.appendChild(note);
+      }
+
+      li.appendChild(body);
+      frag.appendChild(li);
+    });
+
+    listEl.textContent = "";
+    listEl.appendChild(frag);
+  }
+
+  var ready = fetch("./data/sources.json")
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      var sources = data.sources || [];
+      sources.forEach(function (src, i) {
+        index[src.id] = { number: i + 1, source: src };
+      });
+      renderSources(sources);
+      numberFootnotes(document);
+      return index;
+    })
+    .catch(function (err) {
+      console.error("出典データの読み込みに失敗しました:", err);
+    });
+
+  App.refs = {
+    ready: ready,
+    number: numberFootnotes
+  };
+})();
