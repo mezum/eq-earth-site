@@ -410,7 +410,24 @@
       body.appendChild(fn);
     });
 
-    li.appendChild(body);
+    // figure がある項（＝図法の項）は、外形の図を詳細文の左側に置く
+    var detail = document.createElement("div");
+    detail.className = "timeline__detail" + (entry.figure ? " timeline__detail--figured" : "");
+
+    if (entry.figure) {
+      var img = document.createElement("img");
+      img.className = "timeline__figure";
+      img.src = entry.figure.src;
+      img.alt = entry.figure.alt || "";
+      img.width = 200;
+      img.height = 120;
+      img.loading = "lazy";
+      img.decoding = "async";
+      detail.appendChild(img);
+    }
+
+    detail.appendChild(body);
+    li.appendChild(detail);
     return li;
   }
 
