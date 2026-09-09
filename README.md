@@ -22,19 +22,18 @@ npm run build:thumbs # 年表に添える図法の外形図（SVG）を再生成
 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) が `public/` を
 そのまま GitHub Pages の成果物としてアップロードし、公開します。
 
-- 公開 URL: <https://gh.mezum.jp/eq-earth>
+- 公開 URL: <https://eq-earth.mezum.jp/>
 - 手動で流すときは Actions タブの **Deploy to GitHub Pages** から
   **Run workflow**（`workflow_dispatch`）
 - リポジトリ設定の **Settings → Pages → Source** は **GitHub Actions**
 
-`gh.mezum.jp` はこのリポジトリ専用のカスタムドメインです。ドメイン直下ではなく
-`/eq-earth` で配信するため、ワークフローが `public/` を `_site/eq-earth/` に置いてから
-アップロードし、あわせて `_site/CNAME` を書き出します。
+`eq-earth.mezum.jp` はこのサイト専用のカスタムドメインで、`public/CNAME` で指定しています。
+ドメイン直下に `public/` の中身がそのまま配信されます。
 
 ページ内の参照はすべて相対パスなので、配信されるパスが変わってもそのまま動きます。
 GitHub Pages ではキャッシュヘッダを指定できないため、配信の設定ファイルはありません。
 
-DNS は `gh.mezum.jp` の CNAME を `mezum.github.io.` に向けます。
+DNS は `eq-earth.mezum.jp` の CNAME を `mezum.github.io.` に向けています。
 
 ---
 
@@ -115,6 +114,7 @@ public/
 ├── index.html                  本文（注釈は data-src で出典を参照する）
 ├── assets/css/style.css        デザイントークンとスタイル
 ├── assets/js/app.js            1. 地図 / 2. 出典の採番 / 3. 年表
+├── CNAME                       カスタムドメイン (eq-earth.mezum.jp)
 ├── assets/img/                 年表の外形図（build:thumbs が生成）
 ├── assets/vendor/              d3-geo, d3-array, topojson-client（同梱）
 └── data/

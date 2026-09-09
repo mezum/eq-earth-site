@@ -241,6 +241,7 @@ SVG を生成する（`public/assets/img/`）。図法を足すときはこの�
 │   ├── index.html
 │   ├── assets/css/style.css
 │   ├── assets/js/app.js
+│   ├── CNAME                   ← カスタムドメイン
 │   ├── assets/img/proj-*.svg   ← scripts/build-thumbs.mjs が生成
 │   ├── assets/vendor/*.js
 │   └── data/{countries-110m.json, timeline.json, sources.json}
@@ -251,8 +252,8 @@ SVG を生成する（`public/assets/img/`）。図法を足すときはこの�
 ```
 
 - ビルド工程なし（静的ファイルをそのまま配信）
-- 本番デプロイ: GitHub Pages。`main` への push で `public/` を `_site/eq-earth/` に置いて公開する
-  （<https://gh.mezum.jp/eq-earth>）。`gh.mezum.jp` はこのリポジトリ専用のカスタムドメイン。
+- 本番デプロイ: GitHub Pages。`main` への push で `public/` をそのまま公開する
+  （<https://eq-earth.mezum.jp/>）。カスタムドメインは `public/CNAME` で指定する。
   配信されるパスが変わっても動くよう、ページ内の参照はすべて相対パスにする
 - ローカル開発プレビュー: `npm run preview`（依存関係なしの静的サーバ）
 - 年表の外形図の再生成: `npm run build:thumbs`
