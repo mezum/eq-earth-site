@@ -7,7 +7,8 @@
     "preview": "node scripts/serve.mjs 4173",
     "dev": "vercel dev",
     "deploy": "vercel deploy",
-    "deploy:prod": "vercel deploy --prod"
+    "deploy:prod": "vercel deploy --prod",
+    "build:thumbs": "node scripts/build-thumbs.mjs"
   },
   "license": "UNLICENSED"
 }

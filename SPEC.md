@@ -98,7 +98,7 @@ A₄ =  0.003796
 | 3 | なぜ形がゆがむのか | 球は平面に開けない、という話。みかんの皮の比喩 |
 | 4 | 図法が生まれた経緯 | Lambert (1772) から Equal Earth (2018) まで |
 | 5 | 2026 年 9 月に話題になった理由 | 国連総会決議 A/80/L.104 の事実関係 |
-| 6 | 年表 | 図法成立から現代まで。古い順に上から縦に並べる。取り上げる図法は日本でなじみのあるものに絞る |
+| 6 | 年表 | 古い順に上から縦に並べる。取り上げる図法はメルカトル図法・ゴール＝ペータース図法・Equal Earth 図法に絞り、ガウスの定理と政治的な経緯を加える |
 | 7 | 出典 | 注釈番号つきの出典一覧 |
 
 ---
@@ -136,7 +136,11 @@ A₄ =  0.003796
       "sort": "1772-01-01",
       "title": "ランベルトが正積図法を数学的に定式化",
       "body": "淡々とした事実の記述。",
-      "sources": ["wp-lambert-cyl"]
+      "sources": ["wp-lambert-cyl"],
+      "figure": {
+        "src": "./assets/img/proj-mercator.svg",
+        "alt": "図の説明"
+      }
     }
   ]
 }
@@ -150,9 +154,14 @@ A₄ =  0.003796
 | `title` | ✓ | 見出し（1 行） |
 | `body` | ✓ | 本文。起きたことだけを書く |
 | `sources` | | `sources.json` の `id` の配列。注釈番号が自動で付く |
+| `figure` | | `{ src, alt }`。書くと詳細文の左側に画像が並ぶ |
 
 **追記手順**: `entries` 配列に 1 件追加するだけ。並び順は `sort` の昇順でスクリプトが自動整列するため、
 配列内の位置は問わない。ビルド作業は不要。
+
+**図の方針**: `figure` は図法の外形を示す項にだけ付ける。政治的な経緯を書いた項には付けない。
+外形図は `node scripts/build-thumbs.mjs` が同梱の d3-geo と Natural Earth のデータから
+SVG を生成する（`public/assets/img/`）。図法を足すときはこのスクリプトに 1 行足して再生成する。
 
 **記述方針（公平性）**:
 - 起きた事実、日付、主体、数値のみを書く
@@ -226,6 +235,7 @@ A₄ =  0.003796
 │   ├── index.html
 │   ├── assets/css/style.css
 │   ├── assets/js/app.js
+│   ├── assets/img/proj-*.svg   ← scripts/build-thumbs.mjs が生成
 │   ├── assets/vendor/*.js
 │   └── data/{countries-110m.json, timeline.json, sources.json}
 ├── vercel.json
@@ -237,3 +247,4 @@ A₄ =  0.003796
 - ビルド工程なし（静的ファイルをそのまま配信）
 - 本番デプロイ: `vercel deploy --prod`（`vercel link` 済みであること）
 - ローカル開発プレビュー: `npm run preview`（依存関係なしの静的サーバ）
+- 年表の外形図の再生成: `npm run build:thumbs`
