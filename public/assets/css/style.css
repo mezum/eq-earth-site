@@ -1,0 +1,431 @@
+@charset "utf-8";
+
+/* =========================================================
+   Design tokens
+   参照: 無印良品ネットストア デザインシステム概要
+   https://kzhrknt.github.io/awesome-design-md-jp/design-md/muji/DESIGN.md
+   ========================================================= */
+:root {
+  /* Neutral */
+  --c-bg: #fff;
+  --c-bg-secondary: #f5f5f5;
+  --c-kinari: #f4eede;
+  --c-beige: #e0ceaa;
+
+  /* Text（純黒は使わない） */
+  --c-text: #3c3c43;
+  --c-text-secondary: #6d6d72;
+  --c-text-tertiary: #76767b;
+  --c-text-disabled: #9d9da0;
+
+  /* Border */
+  --c-border: #d8d8d9;
+  --c-border-light: #ebebec;
+
+  /* Brand（広い面積には使わない） */
+  --c-muji-red: #7f0019;
+
+  /* Spacing scale — この 12 段階以外は使わない */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 48px;
+  --s-10: 56px;
+  --s-11: 64px;
+  --s-12: 96px;
+
+  --font-sans: "Helvetica Neue", Arial, "Noto Sans JP", "Noto Sans JP Fallback",
+    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+
+  --measure: 720px;
+}
+
+/* =========================================================
+   Base
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  font-feature-settings: normal; /* palt は使わない */
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+figure,
+dl {
+  margin: 0;
+}
+
+a {
+  color: var(--c-text);
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--c-border);
+}
+
+a:hover {
+  text-decoration-color: var(--c-text-secondary);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-text);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   Layout
+   ========================================================= */
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--s-6);
+}
+
+.section {
+  padding: var(--s-12) 0;
+  border-top: 1px solid var(--c-border-light);
+}
+
+.section:first-of-type {
+  border-top: 0;
+}
+
+.section__title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: var(--s-6);
+}
+
+.section__lead {
+  color: var(--c-text-secondary);
+  margin-bottom: var(--s-7);
+}
+
+.prose > * + * {
+  margin-top: var(--s-5);
+}
+
+.prose h3 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-top: var(--s-8);
+}
+
+.prose ul {
+  padding-left: 1.25em;
+}
+
+.prose li + li {
+  margin-top: var(--s-2);
+}
+
+.note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-tertiary);
+}
+
+/* きなり色の面 */
+.panel {
+  background: var(--c-kinari);
+  padding: var(--s-7);
+}
+
+.panel > * + * {
+  margin-top: var(--s-4);
+}
+
+/* =========================================================
+   Hero / Map
+   ========================================================= */
+.hero {
+  background: var(--c-kinari);
+  padding: var(--s-9) 0 var(--s-10);
+}
+
+.hero__eyebrow {
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  color: var(--c-text-secondary);
+  margin-bottom: var(--s-3);
+}
+
+.hero__title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: var(--s-4);
+}
+
+.hero__desc {
+  color: var(--c-text-secondary);
+  margin-bottom: var(--s-7);
+}
+
+.map {
+  position: relative;
+  width: 100%;
+}
+
+.map__canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: grab;
+  /* 縦スクロールは通し、横方向のジェスチャだけ地図が受け取る */
+  touch-action: pan-y;
+}
+
+.map__canvas.is-dragging {
+  cursor: grabbing;
+}
+
+.map__noscript {
+  padding: var(--s-7);
+  border: 1px solid var(--c-border);
+  color: var(--c-text-secondary);
+}
+
+.map__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-6);
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-border);
+}
+
+.map__hint {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+}
+
+.map__readout {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.map__readout b {
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.btn {
+  appearance: none;
+  border: 0;
+  background: var(--c-text);
+  color: #fff;
+  padding: var(--s-2) var(--s-4);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--c-text-secondary);
+}
+
+/* =========================================================
+   Timeline
+   ========================================================= */
+.timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--s-7);
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: var(--s-2);
+  bottom: var(--s-2);
+  width: 1px;
+  background: var(--c-border);
+}
+
+.timeline__item {
+  position: relative;
+  padding-bottom: var(--s-9);
+}
+
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--s-7));
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--c-text);
+}
+
+.timeline__item--recent::before {
+  background: var(--c-muji-red);
+}
+
+.timeline__date {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline__title {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  margin-top: var(--s-1);
+}
+
+.timeline__body {
+  margin-top: var(--s-2);
+  color: var(--c-text-secondary);
+}
+
+/* =========================================================
+   Footnotes / Sources
+   ========================================================= */
+.fn {
+  font-size: 10px;
+  line-height: 1;
+  vertical-align: super;
+  color: var(--c-muji-red);
+  text-decoration: none;
+  margin-left: 1px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.fn:hover {
+  text-decoration: underline;
+}
+
+.sources {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+
+.sources__item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--s-4);
+  padding: var(--s-5) 0;
+  border-top: 1px solid var(--c-border-light);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.sources__item:last-child {
+  border-bottom: 1px solid var(--c-border-light);
+}
+
+.sources__num {
+  color: var(--c-muji-red);
+  font-variant-numeric: tabular-nums;
+}
+
+.sources__title {
+  color: var(--c-text);
+}
+
+.sources__meta {
+  color: var(--c-text-tertiary);
+  margin-top: var(--s-1);
+  word-break: break-word;
+}
+
+.sources__note {
+  color: var(--c-text-tertiary);
+  margin-top: var(--s-1);
+}
+
+:target .sources__num,
+.sources__item:target .sources__num {
+  font-weight: 700;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+.footer {
+  padding: var(--s-9) 0 var(--s-12);
+  border-top: 1px solid var(--c-border-light);
+  color: var(--c-text-tertiary);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.footer > * + * {
+  margin-top: var(--s-3);
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 599px) {
+  .hero__title {
+    font-size: 24px;
+  }
+
+  .section__title {
+    font-size: 20px;
+  }
+
+  .section {
+    padding: var(--s-9) 0;
+  }
+
+  .hero {
+    padding: var(--s-7) 0 var(--s-8);
+  }
+
+  .panel {
+    padding: var(--s-5);
+  }
+
+  .sources__item {
+    grid-template-columns: 28px 1fr;
+    gap: var(--s-3);
+  }
+}
