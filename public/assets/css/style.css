@@ -170,7 +170,34 @@ a:hover {
    ========================================================= */
 .hero {
   background: var(--c-kinari);
-  padding: var(--s-9) 0 var(--s-10);
+  padding: var(--s-6) 0 var(--s-10);
+}
+
+.hero__top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--s-3);
+}
+
+/* 外部リンクのアイコン */
+.icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  /* 図形の右端をコンテナの端にそろえる */
+  margin-right: -6px;
+  color: var(--c-text-secondary);
+  text-decoration: none;
+}
+
+.icon-link:hover {
+  color: var(--c-text);
+}
+
+.icon-link svg {
+  display: block;
 }
 
 .hero__eyebrow {
@@ -471,7 +498,7 @@ a:hover {
   }
 
   .hero {
-    padding: var(--s-7) 0 var(--s-8);
+    padding: var(--s-4) 0 var(--s-8);
   }
 
   .panel {
