@@ -149,8 +149,9 @@
     else label = "西経 " + Math.abs(v) + "°";
     readout.textContent = label;
     canvas.setAttribute(
-      "aria-valuetext",
-      "中央の経線は " + label + " です"
+      "aria-label",
+      "Equal Earth 図法で描かれた世界地図。中央の経線は " + label + "。" +
+        "左右にドラッグ、または左右の矢印キーで動かせます。"
     );
   }
 
