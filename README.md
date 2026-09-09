@@ -16,34 +16,19 @@ npm run preview      # http://localhost:4173/ で public/ を配信（依存関�
 npm run build:thumbs # 年表に添える図法の外形図（SVG）を再生成する
 ```
 
-Vercel CLI を使う場合（初回のみ `npm i -g vercel` と `vercel login` が必要）:
+## デプロイ（GitHub Pages）
 
-```bash
-npm run dev         # vercel dev
-```
+ビルド工程はありません。`main` に push すると
+[`.github/workflows/pages.yml`](./.github/workflows/pages.yml) が `public/` を
+そのまま GitHub Pages の成果物としてアップロードし、公開します。
 
-## デプロイ（Vercel）
+- 公開 URL: <https://mezum.github.io/eq-earth-site/>
+- 手動で流すときは Actions タブの **Deploy to GitHub Pages** から
+  **Run workflow**（`workflow_dispatch`）
+- リポジトリ設定の **Settings → Pages → Source** は **GitHub Actions**
 
-ビルド工程はありません。`public/` をそのまま配信します。
-
-### CLI から
-
-```bash
-npm i -g vercel
-vercel login
-vercel link          # プロジェクトを作成／既存プロジェクトに紐付け
-npm run deploy       # プレビュー環境へ
-npm run deploy:prod  # 本番環境へ
-```
-
-### GitHub 連携から
-
-1. このリポジトリを GitHub に push する
-2. Vercel のダッシュボードで **Add New → Project** からリポジトリを import する
-3. 設定はすべて `vercel.json` に書いてあるため、そのまま **Deploy** を押す
-   - Framework Preset: `Other`
-   - Build Command: なし
-   - Output Directory: `public`
+ページ内の参照はすべて相対パスなので、`/eq-earth-site/` 配下でもそのまま動きます。
+GitHub Pages ではキャッシュヘッダを指定できないため、配信の設定ファイルはありません。
 
 ---
 
@@ -132,7 +117,7 @@ public/
     └── sources.json            出典データ
 scripts/serve.mjs               依存関係なしのプレビューサーバ
 scripts/build-thumbs.mjs        年表の外形図（SVG）の生成
-vercel.json                     Vercel の設定（静的配信）
+.github/workflows/pages.yml     GitHub Pages へのデプロイ
 SPEC.md                         仕様書
 ```
 

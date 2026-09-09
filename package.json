@@ -2,7 +2,7 @@
   "name": "equal-area-map",
   "version": "1.0.0",
   "private": true,
-  "description": "正積図法（Equal-Area Projection）の解説シングルページサイト。Equal Earth 図法の世界地図を経度方向にドラッグできる。",
+  "description": "正積図法（Equal-Area Projection）の解説シングルページサイト。Equal Earth 図法の世界地図をドラッグで動かせる。",
   "scripts": {
     "preview": "node scripts/serve.mjs 4173",
     "build:thumbs": "node scripts/build-thumbs.mjs"

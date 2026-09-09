@@ -244,13 +244,15 @@ SVG を生成する（`public/assets/img/`）。図法を足すときはこの�
 │   ├── assets/img/proj-*.svg   ← scripts/build-thumbs.mjs が生成
 │   ├── assets/vendor/*.js
 │   └── data/{countries-110m.json, timeline.json, sources.json}
-├── vercel.json
+├── .github/workflows/pages.yml
 ├── package.json
 ├── SPEC.md
 └── README.md
 ```
 
 - ビルド工程なし（静的ファイルをそのまま配信）
-- 本番デプロイ: `vercel deploy --prod`（`vercel link` 済みであること）
+- 本番デプロイ: GitHub Pages。`main` への push で `public/` をそのまま公開する
+  （<https://mezum.github.io/eq-earth-site/>）。プロジェクトページの配下に置くため、
+  ページ内の参照はすべて相対パスにする
 - ローカル開発プレビュー: `npm run preview`（依存関係なしの静的サーバ）
 - 年表の外形図の再生成: `npm run build:thumbs`
