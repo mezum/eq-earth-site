@@ -359,3 +359,93 @@
     number: numberFootnotes
   };
 })();
+
+/* ============================================================
+   3. 年表
+   ------------------------------------------------------------
+   timeline.json の entries を sort（ISO 8601 の日付文字列）の
+   昇順に並べて描画する。年表に項目を足すときは entries に
+   1 件追加するだけでよく、配列内の位置は問わない。
+   ============================================================ */
+(function () {
+  "use strict";
+
+  var App = window.App || (window.App = {});
+  var listEl = document.getElementById("timelineList");
+  if (!listEl) return;
+
+  var RECENT_YEARS = 2; // 直近何年ぶんを強調するか
+
+  function isRecent(sort) {
+    var year = parseInt(String(sort).slice(0, 4), 10);
+    if (isNaN(year)) return false;
+    return year >= new Date().getFullYear() - RECENT_YEARS;
+  }
+
+  function renderEntry(entry) {
+    var li = document.createElement("li");
+    li.className = "timeline__item" + (isRecent(entry.sort) ? " timeline__item--recent" : "");
+    if (entry.id) li.id = "tl-" + entry.id;
+
+    var date = document.createElement("p");
+    date.className = "timeline__date";
+    date.textContent = entry.date;
+    li.appendChild(date);
+
+    var title = document.createElement("h3");
+    title.className = "timeline__title";
+    title.textContent = entry.title;
+    li.appendChild(title);
+
+    var body = document.createElement("p");
+    body.className = "timeline__body";
+    body.textContent = entry.body;
+
+    // 出典の注釈番号は App.refs が sources.json をもとに埋める
+    (entry.sources || []).forEach(function (id) {
+      var fn = document.createElement("a");
+      fn.className = "fn";
+      fn.setAttribute("data-src", id);
+      body.appendChild(fn);
+    });
+
+    li.appendChild(body);
+    return li;
+  }
+
+  function render(entries) {
+    var sorted = entries.slice().sort(function (a, b) {
+      // 同じ sort の項目は JSON に書かれた順を保つ（Array#sort は安定）
+      return String(a.sort) < String(b.sort) ? -1 : String(a.sort) > String(b.sort) ? 1 : 0;
+    });
+
+    var frag = document.createDocumentFragment();
+    sorted.forEach(function (entry) {
+      frag.appendChild(renderEntry(entry));
+    });
+
+    listEl.textContent = "";
+    listEl.appendChild(frag);
+  }
+
+  fetch("./data/timeline.json")
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      render(data.entries || []);
+      // 注釈の採番は出典データの読み込み完了後に行う
+      var refs = App.refs;
+      if (refs && refs.ready) {
+        refs.ready.then(function () {
+          refs.number(listEl);
+        });
+      }
+    })
+    .catch(function (err) {
+      console.error("年表データの読み込みに失敗しました:", err);
+      listEl.innerHTML =
+        '<li class="timeline__item"><p class="timeline__body">年表を読み込めませんでした。ページを再読み込みしてください。</p></li>';
+    });
+})();
