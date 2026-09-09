@@ -25,7 +25,6 @@
   var canvas = document.getElementById("map");
   var readout = document.getElementById("lonReadout");
   var latReadout = document.getElementById("latReadout");
-  var latReadoutWrap = document.getElementById("latReadoutWrap");
   var resetBtn = document.getElementById("resetBtn");
   var lockLat = document.getElementById("lockLat");
   var hint = document.getElementById("mapHint");
@@ -167,10 +166,12 @@
     if (frame === null) frame = window.requestAnimationFrame(draw);
   }
 
+  /** 経度・緯度は常に小数第 1 位まで表示する */
   function formatDegree(value, positive, negative) {
     var v = Math.round(value * 10) / 10;
-    if (v === 0) return "0°";
-    return (v > 0 ? positive : negative) + " " + Math.abs(v) + "°";
+    var abs = Math.abs(v).toFixed(1);
+    if (abs === "0.0") return "0.0°";
+    return (v > 0 ? positive : negative) + " " + abs + "°";
   }
 
   function updateReadout() {
@@ -180,14 +181,14 @@
 
     readout.textContent = lonLabel;
     if (latReadout) latReadout.textContent = latLabel;
-    if (latReadoutWrap) latReadoutWrap.hidden = latLocked;
 
     canvas.setAttribute(
       "aria-label",
-      "Equal Earth 図法で描かれた世界地図。中央の経線は " + lonLabel + "。" +
+      "Equal Earth 図法で描かれた世界地図。中央の経線は " + lonLabel +
+        "、中央の緯線は " + latLabel + "。" +
         (latLocked
           ? "左右にドラッグ、または左右の矢印キーで動かせます。"
-          : "中央の緯線は " + latLabel + "。ドラッグ、または矢印キーで上下左右に動かせます。")
+          : "ドラッグ、または矢印キーで上下左右に動かせます。")
     );
   }
 
