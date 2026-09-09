@@ -42,9 +42,12 @@
         </p>
       </noscript>
       <figcaption class="map__bar">
-        <span class="map__hint">左右にドラッグ／矢印キーで移動（動くのは経度方向だけです）</span>
-        <span class="map__readout">中央の経線 <b id="lonReadout">0°</b>
-          <button type="button" class="btn" id="resetBtn" style="margin-left:var(--s-3)">0° に戻す</button>
+        <span class="map__hint" id="mapHint">左右にドラッグ／矢印キーで移動（動くのは経度方向だけです）</span>
+        <span class="map__controls">
+          <span class="map__readout">
+            中央の経線 <b id="lonReadout">0°</b><span id="latReadoutWrap" hidden>／中央の緯線 <b id="latReadout">0°</b></span>
+          </span>
+          <button type="button" class="btn" id="resetBtn">0° に戻す</button>
         </span>
       </figcaption>
     </figure>

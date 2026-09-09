@@ -234,6 +234,13 @@ a:hover {
   color: var(--c-text-secondary);
 }
 
+.map__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-4);
+}
+
 .map__readout {
   font-size: 12px;
   line-height: 1.6;
