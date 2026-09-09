@@ -43,6 +43,8 @@
     "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 
   --measure: 720px;
+  /* 地図の領域。本文の内容幅 (720 - 24*2) の 1.5 倍 = 1008px に左右の余白を足した値 */
+  --measure-wide: 1056px;
 }
 
 /* =========================================================
@@ -101,6 +103,10 @@ a:hover {
   max-width: var(--measure);
   margin: 0 auto;
   padding: 0 var(--s-6);
+}
+
+.wrap--wide {
+  max-width: var(--measure-wide);
 }
 
 .section {
