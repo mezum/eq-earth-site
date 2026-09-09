@@ -24,7 +24,11 @@
 
   var canvas = document.getElementById("map");
   var readout = document.getElementById("lonReadout");
+  var latReadout = document.getElementById("latReadout");
+  var latReadoutWrap = document.getElementById("latReadoutWrap");
   var resetBtn = document.getElementById("resetBtn");
+  var lockLat = document.getElementById("lockLat");
+  var hint = document.getElementById("mapHint");
   if (!canvas) return;
 
   var ctx = canvas.getContext("2d");
@@ -33,6 +37,8 @@
   var borders = null;
 
   var rotation = 0; // projection.rotate()[0]。中央経線は -rotation
+  var pitch = 0; // projection.rotate()[1]。中央緯線は -pitch
+  var latLocked = lockLat ? lockLat.checked : true;
   var projection = null;
   var cssWidth = 0;
   var cssHeight = 0;
@@ -45,9 +51,19 @@
     return v === -180 ? 180 : v;
   }
 
+  /** 緯度方向の回転は ±90 度に収める（それを超えると南北が反転する） */
+  function clampLat(lat) {
+    return Math.max(-90, Math.min(90, lat));
+  }
+
   /** 中央経線（地理座標系での経度） */
   function centralMeridian() {
     return normalizeLon(-rotation);
+  }
+
+  /** 中央緯線（地理座標系での緯度） */
+  function centralParallel() {
+    return -pitch;
   }
 
   /** 幅に合わせて投影と canvas の寸法を決める */
@@ -80,8 +96,8 @@
     frame = null;
     if (!projection) return;
 
-    // 経度方向のみ回転させる。緯度・傾きは常に 0 に固定する
-    projection.rotate([rotation, 0, 0]);
+    // 傾き（3 番目の値）は常に 0。緯度方向は「緯度方向を固定」が外れている間だけ動く
+    projection.rotate([rotation, pitch, 0]);
     var path = d3.geoPath(projection, ctx);
 
     ctx.clearRect(0, 0, cssWidth, cssHeight);
@@ -127,6 +143,18 @@
     ctx.strokeStyle = MAP.color.meridian;
     ctx.stroke();
 
+    // 中央緯線の目印（緯度方向を動かせるときだけ描く）
+    var cp = centralParallel();
+    if (!latLocked && Math.abs(cp) < 89.5) {
+      var parallel = [];
+      for (var lon = -180; lon <= 180; lon += 2) parallel.push([lon, cp]);
+      ctx.beginPath();
+      path({ type: "LineString", coordinates: parallel });
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = MAP.color.meridian;
+      ctx.stroke();
+    }
+
     // 外周
     ctx.beginPath();
     path({ type: "Sphere" });
@@ -139,24 +167,40 @@
     if (frame === null) frame = window.requestAnimationFrame(draw);
   }
 
+  function formatDegree(value, positive, negative) {
+    var v = Math.round(value * 10) / 10;
+    if (v === 0) return "0°";
+    return (v > 0 ? positive : negative) + " " + Math.abs(v) + "°";
+  }
+
   function updateReadout() {
     if (!readout) return;
-    var cm = centralMeridian();
-    var v = Math.round(cm * 10) / 10;
-    var label;
-    if (v === 0) label = "0°";
-    else if (v > 0) label = "東経 " + v + "°";
-    else label = "西経 " + Math.abs(v) + "°";
-    readout.textContent = label;
+    var lonLabel = formatDegree(centralMeridian(), "東経", "西経");
+    var latLabel = formatDegree(centralParallel(), "北緯", "南緯");
+
+    readout.textContent = lonLabel;
+    if (latReadout) latReadout.textContent = latLabel;
+    if (latReadoutWrap) latReadoutWrap.hidden = latLocked;
+
     canvas.setAttribute(
       "aria-label",
-      "Equal Earth 図法で描かれた世界地図。中央の経線は " + label + "。" +
-        "左右にドラッグ、または左右の矢印キーで動かせます。"
+      "Equal Earth 図法で描かれた世界地図。中央の経線は " + lonLabel + "。" +
+        (latLocked
+          ? "左右にドラッグ、または左右の矢印キーで動かせます。"
+          : "中央の緯線は " + latLabel + "。ドラッグ、または矢印キーで上下左右に動かせます。")
     );
   }
 
-  function setRotation(value) {
-    rotation = normalizeLon(value);
+  function updateHint() {
+    if (!hint) return;
+    hint.textContent = latLocked
+      ? "左右にドラッグ／矢印キーで移動（動くのは経度方向だけです）"
+      : "ドラッグ／矢印キーで移動（上下にも動きます）";
+  }
+
+  function setView(nextRotation, nextPitch) {
+    rotation = normalizeLon(nextRotation);
+    pitch = latLocked ? 0 : clampLat(nextPitch);
     updateReadout();
     requestDraw();
   }
@@ -164,14 +208,18 @@
   /* ---- ドラッグ（経度方向のみ） ---- */
   var dragging = false;
   var startX = 0;
+  var startY = 0;
   var startRotation = 0;
+  var startPitch = 0;
   var moved = false;
 
   canvas.addEventListener("pointerdown", function (e) {
     dragging = true;
     moved = false;
     startX = e.clientX;
+    startY = e.clientY;
     startRotation = rotation;
+    startPitch = pitch;
     canvas.classList.add("is-dragging");
     if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
   });
@@ -179,9 +227,13 @@
   canvas.addEventListener("pointermove", function (e) {
     if (!dragging) return;
     var dx = e.clientX - startX;
-    if (Math.abs(dx) > 2) moved = true;
-    // 画面上の横移動量を、地図幅 = 360 度として経度に換算する
-    setRotation(startRotation + (dx / cssWidth) * 360);
+    var dy = e.clientY - startY;
+    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) moved = true;
+    // 画面上の移動量を、地図幅 = 360 度・地図高さ = 180 度として角度に換算する
+    setView(
+      startRotation + (dx / cssWidth) * 360,
+      startPitch - (dy / cssHeight) * 180
+    );
     if (moved && e.cancelable) e.preventDefault();
   });
 
@@ -203,20 +255,38 @@
     var step = e.shiftKey ? 30 : 5;
     if (e.key === "ArrowRight") {
       // 視点を東へ動かす = 中央経線を増やす = rotation を減らす
-      setRotation(rotation - step);
+      setView(rotation - step, pitch);
       e.preventDefault();
     } else if (e.key === "ArrowLeft") {
-      setRotation(rotation + step);
+      setView(rotation + step, pitch);
+      e.preventDefault();
+    } else if (!latLocked && e.key === "ArrowUp") {
+      // 視点を北へ動かす = 中央緯線を増やす = pitch を減らす
+      setView(rotation, pitch - step);
+      e.preventDefault();
+    } else if (!latLocked && e.key === "ArrowDown") {
+      setView(rotation, pitch + step);
       e.preventDefault();
     } else if (e.key === "Home") {
-      setRotation(0);
+      setView(0, 0);
       e.preventDefault();
     }
   });
 
   if (resetBtn) {
     resetBtn.addEventListener("click", function () {
-      setRotation(0);
+      setView(0, 0);
+    });
+  }
+
+  /* ---- 緯度方向の固定 ---- */
+  if (lockLat) {
+    lockLat.addEventListener("change", function () {
+      latLocked = lockLat.checked;
+      canvas.classList.toggle("map__canvas--free", !latLocked);
+      updateHint();
+      // 固定に戻したときは中央の緯線を 0 度へ戻す
+      setView(rotation, latLocked ? 0 : pitch);
     });
   }
 
@@ -234,6 +304,8 @@
 
   /* ---- データ読み込み ---- */
   layout();
+  canvas.classList.toggle("map__canvas--free", !latLocked);
+  updateHint();
   updateReadout();
   requestDraw();
 

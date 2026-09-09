@@ -33,7 +33,7 @@
         class="map__canvas"
         role="img"
         tabindex="0"
-        aria-label="Equal Earth 図法で描かれた世界地図。左右にドラッグ、または左右の矢印キーで中央の経線を動かせます。"
+        aria-label="Equal Earth 図法で描かれた世界地図。左右にドラッグ、または左右の矢印キーで中央の経線を動かせます。「緯度方向を固定」のチェックを外すと、上下にも動かせます。"
       ></canvas>
       <noscript>
         <p class="map__noscript">
@@ -44,6 +44,10 @@
       <figcaption class="map__bar">
         <span class="map__hint" id="mapHint">左右にドラッグ／矢印キーで移動（動くのは経度方向だけです）</span>
         <span class="map__controls">
+          <label class="map__toggle">
+            <input type="checkbox" id="lockLat" checked>
+            緯度方向を固定
+          </label>
           <span class="map__readout">
             中央の経線 <b id="lonReadout">0°</b><span id="latReadoutWrap" hidden>／中央の緯線 <b id="latReadout">0°</b></span>
           </span>

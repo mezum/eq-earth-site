@@ -211,6 +211,27 @@ a:hover {
   cursor: grabbing;
 }
 
+/* 緯度方向の固定を外している間は、縦のジェスチャも地図が受け取る */
+.map__canvas--free {
+  touch-action: none;
+}
+
+.map__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.map__toggle input {
+  margin: 0;
+  accent-color: var(--c-text);
+}
+
 .map__noscript {
   padding: var(--s-7);
   border: 1px solid var(--c-border);
