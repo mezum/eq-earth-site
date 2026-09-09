@@ -8,6 +8,13 @@
       "accessed": "2026-09-09"
     },
     {
+      "id": "cnn-un-2026",
+      "title": "UN votes to adopt new map that makes our world look very different（2026年9月4日）",
+      "publisher": "CNN",
+      "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
+      "accessed": "2026-09-09"
+    },
+    {
       "id": "wp-equal-area",
       "title": "Equal-area projection",
       "publisher": "Wikipedia（英語版）",
@@ -29,10 +36,10 @@
       "accessed": "2026-09-09"
     },
     {
-      "id": "wp-lambert-cyl",
-      "title": "Lambert cylindrical equal-area projection",
+      "id": "wp-sinusoidal",
+      "title": "Sinusoidal projection（サンソン図法・正弦曲線図法）",
       "publisher": "Wikipedia（英語版）",
-      "url": "https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection",
+      "url": "https://en.wikipedia.org/wiki/Sinusoidal_projection",
       "accessed": "2026-09-09"
     },
     {
@@ -43,24 +50,24 @@
       "accessed": "2026-09-09"
     },
     {
-      "id": "wp-gall-peters",
-      "title": "Gall–Peters projection",
-      "publisher": "Wikipedia（英語版）",
-      "url": "https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection",
-      "accessed": "2026-09-09"
-    },
-    {
-      "id": "wp-eckert4",
-      "title": "Eckert IV projection",
-      "publisher": "Wikipedia（英語版）",
-      "url": "https://en.wikipedia.org/wiki/Eckert_IV_projection",
-      "accessed": "2026-09-09"
-    },
-    {
       "id": "wp-goode",
       "title": "Goode homolosine projection",
       "publisher": "Wikipedia（英語版）",
       "url": "https://en.wikipedia.org/wiki/Goode_homolosine_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-lambert-cyl",
+      "title": "Lambert cylindrical equal-area projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Lambert_cylindrical_equal-area_projection",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "wp-gall-peters",
+      "title": "Gall–Peters projection",
+      "publisher": "Wikipedia（英語版）",
+      "url": "https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection",
       "accessed": "2026-09-09"
     },
     {
@@ -78,10 +85,10 @@
       "accessed": "2026-09-09"
     },
     {
-      "id": "frwp-correct-the-map",
-      "title": "Correct the Map",
-      "publisher": "Wikipédia（フランス語版）",
-      "url": "https://fr.wikipedia.org/wiki/Correct_the_Map",
+      "id": "un-news-2026",
+      "title": "UN tells the world: Stop making Africa look small（2026年9月4日）",
+      "publisher": "UN News",
+      "url": "https://news.un.org/en/story/2026/09/1168284",
       "accessed": "2026-09-09"
     },
     {
@@ -92,31 +99,17 @@
       "accessed": "2026-09-09"
     },
     {
+      "id": "frwp-correct-the-map",
+      "title": "Correct the Map",
+      "publisher": "Wikipédia（フランス語版）",
+      "url": "https://fr.wikipedia.org/wiki/Correct_the_Map",
+      "accessed": "2026-09-09"
+    },
+    {
       "id": "npr-au-2025",
       "title": "African Union backs campaign to replace Mercator map that distorts Africa's size（2025年8月21日）",
       "publisher": "NPR",
       "url": "https://www.npr.org/2025/08/21/nx-s1-5508358/mercator-map-africa",
-      "accessed": "2026-09-09"
-    },
-    {
-      "id": "un-news-2026",
-      "title": "UN tells the world: Stop making Africa look small（2026年9月4日）",
-      "publisher": "UN News",
-      "url": "https://news.un.org/en/story/2026/09/1168284",
-      "accessed": "2026-09-09"
-    },
-    {
-      "id": "cnn-un-2026",
-      "title": "UN votes to adopt new map that makes our world look very different（2026年9月4日）",
-      "publisher": "CNN",
-      "url": "https://www.cnn.com/2026/09/04/world/un-vote-new-world-map-intl-scli",
-      "accessed": "2026-09-09"
-    },
-    {
-      "id": "foxnews-2026",
-      "title": "United Nations votes 164-1 for Equal Earth map after US brands it 'radical ideological project'（2026年9月）",
-      "publisher": "Fox News",
-      "url": "https://www.foxnews.com/world/united-nations-votes-164-1-equal-earth-map-us-brands-radical-ideological-project",
       "accessed": "2026-09-09"
     },
     {
@@ -131,6 +124,13 @@
       "title": "France adopts Eckert IV world map to replace Mercator projection（2026年9月）",
       "publisher": "The Connexion",
       "url": "https://www.connexionfrance.com/news/france-adopts-new-world-map-moving-on-from-mercator/813158",
+      "accessed": "2026-09-09"
+    },
+    {
+      "id": "foxnews-2026",
+      "title": "United Nations votes 164-1 for Equal Earth map after US brands it 'radical ideological project'（2026年9月）",
+      "publisher": "Fox News",
+      "url": "https://www.foxnews.com/world/united-nations-votes-164-1-equal-earth-map-us-brands-radical-ideological-project",
       "accessed": "2026-09-09"
     },
     {
