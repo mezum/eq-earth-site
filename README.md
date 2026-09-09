@@ -11,7 +11,8 @@
 ## 開発
 
 ```bash
-npm run preview     # http://localhost:4173/ で public/ を配信（依存関係なし）
+npm run preview      # http://localhost:4173/ で public/ を配信（依存関係なし）
+npm run build:thumbs # 年表に添える図法の外形図（SVG）を再生成する
 ```
 
 Vercel CLI を使う場合（初回のみ `npm i -g vercel` と `vercel login` が必要）:
@@ -59,7 +60,11 @@ npm run deploy:prod  # 本番環境へ
   "sort": "2027-01-10",
   "title": "見出しを 1 行で",
   "body": "起きたことだけを淡々と書く。",
-  "sources": ["un-news-2026"]
+  "sources": ["un-news-2026"],
+  "figure": {
+    "src": "./assets/img/proj-mercator.svg",
+    "alt": "図の説明"
+  }
 }
 ```
 
@@ -71,6 +76,14 @@ npm run deploy:prod  # 本番環境へ
 | `title` | ✓ | 見出し |
 | `body` | ✓ | 本文 |
 | `sources` | | `sources.json` の `id` の配列。注釈番号が自動で付く |
+| `figure` | | `{ src, alt }`。書くと詳細文の左側に画像が並ぶ |
+
+**図を付ける／付けない**
+
+`figure` は図法の外形を示す項にだけ付けます。政治的な経緯を書いた項には付けません。
+外形図は `npm run build:thumbs` が、同梱の d3-geo と Natural Earth のデータから
+`public/assets/img/` に SVG を生成します。図法を増やすときは
+`scripts/build-thumbs.mjs` の `PROJECTIONS` に 1 件足して再生成してください。
 
 **記述方針**（公平性を保つため）
 
@@ -110,12 +123,14 @@ public/
 ├── index.html                  本文（注釈は data-src で出典を参照する）
 ├── assets/css/style.css        デザイントークンとスタイル
 ├── assets/js/app.js            1. 地図 / 2. 出典の採番 / 3. 年表
+├── assets/img/                 年表の外形図（build:thumbs が生成）
 ├── assets/vendor/              d3-geo, d3-array, topojson-client（同梱）
 └── data/
     ├── countries-110m.json     Natural Earth 1:110m（TopoJSON）
     ├── timeline.json           年表データ
     └── sources.json            出典データ
 scripts/serve.mjs               依存関係なしのプレビューサーバ
+scripts/build-thumbs.mjs        年表の外形図（SVG）の生成
 vercel.json                     Vercel の設定（静的配信）
 SPEC.md                         仕様書
 ```
