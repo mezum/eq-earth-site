@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>面積が正しい世界地図 — 正積図法（Equal-Area Projection）のはなし</title>
+<meta name="description" content="正積図法とは何か、どう生まれたか、そして 2026 年 9 月に話題になった理由。横にドラッグして動かせる Equal Earth 図法の世界地図つき。">
+<meta name="color-scheme" content="light">
+<meta property="og:title" content="面積が正しい世界地図 — 正積図法のはなし">
+<meta property="og:description" content="正積図法とは何か、どう生まれたか、そして 2026 年 9 月に話題になった理由。">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     ファーストビュー：地図
+     ============================================================ -->
+<header class="hero">
+  <div class="wrap">
+    <p class="hero__eyebrow">EQUAL-AREA PROJECTION</p>
+    <h1 class="hero__title">面積が正しい世界地図</h1>
+    <p class="hero__desc">
+      これは Equal Earth 図法で描いた世界地図です。地球上で同じ広さの土地は、この地図の上でも同じ広さで描かれます。
+      左右にドラッグすると、地図の真ん中に来る経線を動かせます。
+    </p>
+
+    <figure class="map">
+      <canvas
+        id="map"
+        class="map__canvas"
+        role="img"
+        tabindex="0"
+        aria-label="Equal Earth 図法で描かれた世界地図。左右にドラッグ、または左右の矢印キーで中央の経線を動かせます。"
+      ></canvas>
+      <noscript>
+        <p class="map__noscript">
+          この地図は JavaScript で描いています。JavaScript を有効にすると、Equal Earth 図法の世界地図が表示され、
+          左右にドラッグして動かせるようになります。
+        </p>
+      </noscript>
+      <figcaption class="map__bar">
+        <span class="map__hint">左右にドラッグ／矢印キーで移動（動くのは経度方向だけです）</span>
+        <span class="map__readout">中央の経線 <b id="lonReadout">0°</b>
+          <button type="button" class="btn" id="resetBtn" style="margin-left:var(--s-3)">0° に戻す</button>
+        </span>
+      </figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+
+  <!-- ========================================================
+       正積図法とは
+       ======================================================== -->
+  <section class="section" id="what">
+    <div class="wrap">
+      <h2 class="section__title">正積図法って、なに？</h2>
+      <div class="prose">
+        <p>
+          世界地図は、まるい地球を平らな紙に写したものです。まるいものを平らにする以上、写すときに必ずどこかが変わってしまいます。
+          何を変えないようにするかを決めたものが「図法」です。
+        </p>
+        <p>
+          <strong>正積図法とは、面積の比を変えない図法のことです。</strong><a class="fn" data-src="esri-equal-area"></a>
+          地図の上でふたつの国を切り抜いて重ねたときの大小関係が、実際の面積の大小関係とぴったり合います。
+          英語では equal-area、equivalent、authalic などと呼ばれます。
+        </p>
+        <p>
+          たとえば、学校でよく見るメルカトル図法の地図では、グリーンランドがアフリカ大陸と同じくらいの大きさに見えます。
+          しかし実際のアフリカ大陸は、グリーンランドのおよそ 14 倍の面積があります。<a class="fn" data-src="cnn-un-2026"></a>
+          正積図法の地図では、この 14 倍が 14 倍のまま描かれます。
+        </p>
+        <p>
+          もうひとつ大事なことがあります。面積が正しいかどうかは、<strong>全部正しいか、どこも正しくないかのどちらか</strong>で、
+          「この辺だけ面積が正しい地図」というものは存在しません。<a class="fn" data-src="wp-equal-area"></a>
+        </p>
+
+        <h3>もう少しきちんと言うと</h3>
+        <p>
+          緯度 φ、経度 λ の点を、地図の座標 x, y に対応させる計算が図法です。
+          この計算が正積であるための条件は、次の式が地図のすべての場所で成り立つことです（球の場合、s は定数）。<a class="fn" data-src="wp-equal-area"></a>
+        </p>
+        <pre class="formula">(∂x/∂λ)(∂y/∂φ) − (∂x/∂φ)(∂y/∂λ) = s · cos φ</pre>
+        <p class="note">
+          球面のごく小さな区画の面積が cos φ に比例することから、この式は「地図上の小さな区画の面積が、
+          地球上の対応する区画の面積の定数倍になっている」ことと同じ意味になります。
+          言いかえると、地図のどこで小さな円を描いても、そのゆがんだ形（ティソーの指示楕円）の面積はいつも同じ、ということです。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       なぜ形がゆがむのか
+       ======================================================== -->
+  <section class="section" id="why-distorted">
+    <div class="wrap">
+      <h2 class="section__title">面積が正しいと、形はゆがみます</h2>
+      <div class="prose">
+        <p>
+          みかんの皮をむいて、机の上で平らに押しつぶすところを想像してみてください。
+          破れるか、どこかが伸びるかしないと、平らにはなりません。地球と地図の関係もこれと同じです。
+        </p>
+        <p>
+          このことは 1827 年にガウスが証明しています（驚異の定理）。<a class="fn" data-src="wp-theorema-egregium"></a>
+          その帰結として、<strong>面積と形（角度）の両方を同時に正しく保つ地図は作れません</strong>。<a class="fn" data-src="wp-equal-area"></a>
+          正積図法が形をゆがめるのは、作りが雑だからではなく、数学的にそうならざるを得ないからです。
+        </p>
+        <div class="panel">
+          <p><strong>どちらが正しい地図か、という話ではありません。</strong></p>
+          <p class="note">
+            メルカトル図法は角度を正しく保つ図法です。地図上の直線が一定の方位を指すので、航海に向いています。
+            拡大しても地形の形がくずれないため、現在の多くの地図アプリでも使われています。<a class="fn" data-src="wp-mercator"></a>
+            正積図法は面積を正しく保つ図法です。人口や森林面積のような「広さあたりの量」を比べる地図に向いています。<a class="fn" data-src="wp-equal-area"></a>
+            用途が違う道具だと考えるのが正確です。
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       生まれた経緯
+       ======================================================== -->
+  <section class="section" id="history">
+    <div class="wrap">
+      <h2 class="section__title">どうやって生まれたのか</h2>
+      <div class="prose">
+        <p>
+          面積を保つという条件を数学の問題として最初に体系的に扱ったのは、1772 年のヨハン・ハインリヒ・ランベルトです。<a class="fn" data-src="wp-lambert-cyl"></a>
+          その後、1805 年のモルワイデ図法<a class="fn" data-src="wp-mollweide"></a>、1906 年のエッケルト第 4・第 6 図法<a class="fn" data-src="wp-eckert4"></a>、
+          1923 年のグード・ホモロサイン図法<a class="fn" data-src="wp-goode"></a>といった正積図法が次々に作られました。
+          どれも「面積は守る、その代わり形はゆがむ」という同じ選択をしています。
+        </p>
+        <p>
+          正積図法が数学の話にとどまらなくなったのは 1973 年です。
+          この年、アルノ・ペータースが正積円筒図法を「ペータース世界地図」として記者会見で発表し、
+          メルカトル図法が低緯度の地域を小さく見せていると主張しました。
+          この図法は 1855 年にジェームズ・ゴールが示していたものと実質的に同じで、現在はゴール＝ペータース図法と呼ばれます。<a class="fn" data-src="wp-gall-peters"></a>
+          その後 1989 年から 1990 年にかけて、北米の 7 つの地理学関係団体が、メルカトル図法とゴール＝ペータース図法の双方を含む
+          矩形の世界地図を教育や報道で使わないよう求める決議を採択しています。<a class="fn" data-src="wp-gall-peters"></a>
+        </p>
+        <p>
+          このページの地図に使っている <strong>Equal Earth 図法は 2018 年に発表された、比較的新しい図法</strong>です。<a class="fn" data-src="wp-equal-earth"></a>
+          きっかけは 2017 年 3 月に米ボストンの公立学校がゴール＝ペータース図法を授業で使い始めたことでした。
+          ボヤン・シャヴリッチ、トム・パターソン、ベルンハルト・イェニーの 3 名は、
+          既存の正積図法に見た目の面で納得できるものが見つからなかったため、新しい図法を設計したと述べています。<a class="fn" data-src="wp-equal-earth"></a><a class="fn" data-src="ijgis-equal-earth"></a>
+        </p>
+        <p class="note">
+          Equal Earth 図法の計算式は次のとおりです（単位球、λ₀ は中央の経線）。このページの地図もこの式で描いています。
+        </p>
+        <pre class="formula">sin θ = (√3 / 2) · sin φ
+
+x = 2√3 (λ − λ₀) cos θ / ( 3 · ( 9A₄θ⁸ + 7A₃θ⁶ + 3A₂θ² + A₁ ) )
+y = A₄θ⁹ + A₃θ⁷ + A₂θ³ + A₁θ
+
+A₁ =  1.340264    A₂ = −0.081106
+A₃ =  0.000893    A₄ =  0.003796</pre>
+        <p class="note">出典：Equal Earth 図法の原論文および解説。<a class="fn" data-src="wp-equal-earth"></a><a class="fn" data-src="ijgis-equal-earth"></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       2026年9月に話題になった理由
+       ======================================================== -->
+  <section class="section" id="september-2026">
+    <div class="wrap">
+      <h2 class="section__title">2026 年 9 月に話題になった理由</h2>
+      <div class="prose">
+        <p>
+          2026 年 9 月 4 日、国連総会が決議 A/80/L.104 を採択しました。
+          投票は賛成 164、反対 1、棄権 6。反対は米国、棄権はエストニア、ジョージア、リトアニア、モルドバ、セルビア、ウクライナでした。<a class="fn" data-src="un-news-2026"></a>
+          決議案は、アフリカ・グループを代表してトーゴが提出しました。<a class="fn" data-src="un-news-2026"></a>
+        </p>
+        <p>
+          背景には、2025 年に Africa No Filter と Speak Up Africa が始めたキャンペーン「Correct The Map」があります。<a class="fn" data-src="correctthemap"></a><a class="fn" data-src="frwp-correct-the-map"></a>
+          2025 年 8 月にはアフリカ連合がこのキャンペーンへの支持を表明しました。<a class="fn" data-src="npr-au-2025"></a>
+        </p>
+
+        <h3>決議が求めていること</h3>
+        <ul>
+          <li>政府・学校・国際機関・技術系企業に対し、面積の比較が問題になる場面で Equal Earth 図法などの正積図法を用いること<a class="fn" data-src="un-news-2026"></a></li>
+          <li>平面の地図が球体である地球を表すことには限界がある、と教えること<a class="fn" data-src="un-news-2026"></a></li>
+        </ul>
+
+        <h3>決議が求めていないこと</h3>
+        <ul>
+          <li>メルカトル図法の使用を禁止すること<a class="fn" data-src="un-news-2026"></a><a class="fn" data-src="france24-2026"></a></li>
+          <li>すべての用途をひとつの図法に統一すること<a class="fn" data-src="mainichi-2026"></a></li>
+        </ul>
+
+        <p>
+          同じ 9 月 4 日、フランスのジャン＝ノエル・バロ外相が、公式地図でメルカトル図法の使用をやめ、
+          エッカート第 4 図法を用いると発表しました。フランスは決議の共同提案国です。<a class="fn" data-src="france24-2026"></a><a class="fn" data-src="connexion-2026"></a>
+          一方、反対票を投じた米国は、この決議案を「急進的なイデオロギーのプロジェクト」だと述べています。<a class="fn" data-src="foxnews-2026"></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       年表
+       ======================================================== -->
+  <section class="section" id="timeline">
+    <div class="wrap">
+      <h2 class="section__title">年表</h2>
+      <p class="section__lead">
+        図法が生まれてから現在までに起きたことを、古いものを先頭にして並べています。
+        起きた事実だけを書き、評価は書いていません。
+      </p>
+      <ol class="timeline" id="timelineList">
+        <li class="timeline__item">
+          <p class="timeline__body">年表を読み込んでいます…</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       出典
+       ======================================================== -->
+  <section class="section" id="sources">
+    <div class="wrap">
+      <h2 class="section__title">出典</h2>
+      <p class="section__lead">
+        本文および年表の中の <span class="fn" style="vertical-align:baseline;font-size:12px">[番号]</span> は、下の一覧に対応しています。
+      </p>
+      <ol class="sources" id="sourcesList"></ol>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>
+      地図データ：Natural Earth 1:110m Cultural Vectors（パブリックドメイン）を
+      world-atlas が TopoJSON 化したものを同梱しています。<a class="fn" data-src="naturalearth"></a><a class="fn" data-src="world-atlas"></a>
+      投影と描画には d3-geo、TopoJSON の変換には topojson-client を使っています（いずれも ISC License）。<a class="fn" data-src="d3-geo"></a><a class="fn" data-src="topojson-client"></a>
+    </p>
+    <p>
+      配色・タイポグラフィ・余白は、無印良品ネットストアのデザインシステムを参照しています。<a class="fn" data-src="muji-design-md"></a>
+    </p>
+    <p>外部の CDN やトラッキングは使用していません。</p>
+  </div>
+</footer>
+
+<script src="./assets/vendor/d3-array.min.js"></script>
+<script src="./assets/vendor/d3-geo.min.js"></script>
+<script src="./assets/vendor/topojson-client.min.js"></script>
+<script src="./assets/js/app.js"></script>
+</body>
+</html>
