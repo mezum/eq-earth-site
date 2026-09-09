@@ -28,19 +28,12 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      # ビルド工程はない。カスタムドメインの直下ではなく
-      # /eq-earth/ で配信するため、public/ をその名前のディレクトリに入れる
-      - name: Stage site under /eq-earth
-        run: |
-          mkdir -p _site/eq-earth
-          cp -R public/. _site/eq-earth/
-          touch _site/.nojekyll
-          echo 'gh.mezum.jp' > _site/CNAME
-
+      # ビルド工程はない。public/ をそのまま成果物にする
+      # カスタムドメインは public/CNAME で指定する
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: public
 
       - name: Deploy
         id: deployment
