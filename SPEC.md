@@ -251,9 +251,8 @@ SVG を生成する（`public/assets/img/`）。図法を足すときはこの�
 ```
 
 - ビルド工程なし（静的ファイルをそのまま配信）
-- 本番デプロイ: GitHub Pages。`main` への push で `public/` をそのまま公開する
-  （<https://mezum.github.io/eq-earth-site/>。アカウントの独自ドメイン
-  <http://mezum.one/eq-earth-site/> に転送される）。プロジェクトページの配下に置くため、
-  ページ内の参照はすべて相対パスにする
+- 本番デプロイ: GitHub Pages。`main` への push で `public/` を `_site/eq-earth/` に置いて公開する
+  （<https://gh.mezum.jp/eq-earth>）。`gh.mezum.jp` はこのリポジトリ専用のカスタムドメイン。
+  配信されるパスが変わっても動くよう、ページ内の参照はすべて相対パスにする
 - ローカル開発プレビュー: `npm run preview`（依存関係なしの静的サーバ）
 - 年表の外形図の再生成: `npm run build:thumbs`

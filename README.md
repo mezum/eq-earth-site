@@ -22,14 +22,19 @@ npm run build:thumbs # 年表に添える図法の外形図（SVG）を再生成
 [`.github/workflows/pages.yml`](./.github/workflows/pages.yml) が `public/` を
 そのまま GitHub Pages の成果物としてアップロードし、公開します。
 
-- 公開 URL: <https://mezum.github.io/eq-earth-site/>
-  （アカウントに独自ドメインが設定されているため <http://mezum.one/eq-earth-site/> に転送されます）
+- 公開 URL: <https://gh.mezum.jp/eq-earth>
 - 手動で流すときは Actions タブの **Deploy to GitHub Pages** から
   **Run workflow**（`workflow_dispatch`）
 - リポジトリ設定の **Settings → Pages → Source** は **GitHub Actions**
 
-ページ内の参照はすべて相対パスなので、`/eq-earth-site/` 配下でもそのまま動きます。
+`gh.mezum.jp` はこのリポジトリ専用のカスタムドメインです。ドメイン直下ではなく
+`/eq-earth` で配信するため、ワークフローが `public/` を `_site/eq-earth/` に置いてから
+アップロードし、あわせて `_site/CNAME` を書き出します。
+
+ページ内の参照はすべて相対パスなので、配信されるパスが変わってもそのまま動きます。
 GitHub Pages ではキャッシュヘッダを指定できないため、配信の設定ファイルはありません。
+
+DNS は `gh.mezum.jp` の CNAME を `mezum.github.io.` に向けます。
 
 ---
 
